@@ -22,5 +22,7 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 
 - [Development Plan](../../wiki/Development&20Plan)
 
-- [Iteration 1 Plan](../../wiki/Iteration&201&20Plan) and [Task Board]
+- [Iteration 1 Plan](../../wiki/Iteration&201&20Plan)
+
+- [Task Board](https://github.com/users/RyukungG/projects/2/views/1)
 
