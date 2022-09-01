@@ -2,11 +2,11 @@
 ## Online Polls And Surveys
 
 An application for conducting online polls and surveys based
-on the [Django Tutorial project][django-tutorial], with
+on the [django-tutorial](https://docs.djangoproject.com/en/4.1/intro/tutorial01/), with
 additional features.
 
 App created as part of the [Individual Software Process](
-https://cpske.github.io/ISP) course at Kasetsart University.
+https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.th/en/community-home).
 
 ## Install and Run
 
@@ -22,4 +22,5 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 
 - [Development Plan](../../wiki/Development&20Plan)
 
-[django-tutorial](https://docs.djangoproject.com/en/4.1/intro/tutorial01/)
+- [Iteration 1 Plan](../../wiki/Iteration&201&20Plan) and [Task Board]
+
