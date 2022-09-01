@@ -18,6 +18,8 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 
 - [Vision Statement](../../wiki/Vision%20Statement)
 
+- [Requirements](../../wiki/Requirements)
+
 - [Development Plan](../../wiki/Development&20Plan)
 
-[django-tutorial]: TODO-write-the-tutorial-URL-here
+[django-tutorial](https://docs.djangoproject.com/en/4.1/intro/tutorial01/)
