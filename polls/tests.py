@@ -127,3 +127,23 @@ class QuestionDetailViewTests(TestCase):
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+
+class QuestionResultViewTests(TestCase):
+    def test_vote_count(self):
+        test_question = create_question(question_text="test_vote", days=1)
+        test_question.choice_set.create(choice_text='test', votes=5)
+        choice_vote_result = test_question.choice_set.get(pk=1)
+        url = reverse('polls:results', args=(test_question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, f"{ choice_vote_result.choice_text } -- { choice_vote_result.votes }")
+        self.assertEqual(choice_vote_result.votes, 5)
+
+    def test_past_day_view_vote(self):
+        test_question = create_question(question_text="test_vote", days=-5)
+        test_question.choice_set.create(choice_text='test', votes=2)
+        choice_vote_result = test_question.choice_set.get(pk=1)
+        url = reverse('polls:results', args=(test_question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, f"{ choice_vote_result.choice_text } -- { choice_vote_result.votes }")
+        self.assertEqual(choice_vote_result.votes, 2)
