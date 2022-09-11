@@ -1,6 +1,6 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader
+from django.contrib import messages
 from django.urls import reverse
 from django.views import generic
 from django.http import Http404
@@ -31,6 +31,18 @@ class DetailView(generic.DetailView):
         Excludes any questions that aren't published yet.
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
+
+    def get(self, request, pk):
+        question = get_object_or_404(Question, pk=pk)
+        if not question.is_published():
+            messages.error(request, 'This poll not publish yet.')
+            return HttpResponseRedirect(reverse('polls:index'))
+        elif not question.can_vote():
+            messages.error(request, 'This poll is ended.')
+            return HttpResponseRedirect(reverse('polls:results', args=(pk,)))
+        else:
+            return render(request, 'polls/detail.html', {'question': question,})
+
 
 
 class ResultsView(generic.DetailView):
