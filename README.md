@@ -26,5 +26,5 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 
 - [Iteration 2 Plan](https://github.com/RyukungG/ku-polls/wiki/Iteration-2-Plan)
 
-- [Task Board](https://github.com/users/RyukungG/projects/2/views/3)
+- [Task Board](https://github.com/users/RyukungG/projects/2/views/1)
 
