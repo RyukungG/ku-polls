@@ -1,7 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 <h1>{{ question.question_text }}</h1>
-
+<body>
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -12,10 +12,11 @@
 </ul>
 {% endif %}
 
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-{% endfor %}
-</ul>
+<div id="result">
+    {% for choice in question.choice_set.all %}
+        <div class="vote">{{ choice.choice_text }} ------------><div class="vote_result">{{ choice.votes }}</div></div>
+    {% endfor %}
+</div>
 
 <a href="{% url 'polls:index' %}"><button type="button">Home</button></a>
+</body>

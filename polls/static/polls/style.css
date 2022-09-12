@@ -23,3 +23,21 @@ h1 {
     color: white;
     text-align: center;
 }
+
+#result{
+    display: block;
+    margin: 0 auto;
+    border: 5px outset black;
+    float: left;
+}
+
+.vote {
+  width: 250px;
+  text-align: left;
+  padding: 20px;
+}
+
+.vote_result {
+    float: right;
+    padding: 20px;
+}
