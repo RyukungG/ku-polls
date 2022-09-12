@@ -1,6 +1,43 @@
 li a {
     color: blue;
 }
+
 body {
-    background: white url("images/background.png") no-repeat;
+    background: white url("images/background.gif") no-repeat;
+    background-size: auto;
+    background-position: center bottom;
+}
+
+button {
+    background: black;
+    color: white;
+}
+
+input {
+    background: black;
+    color: white;
+}
+
+h1 {
+    background: black;
+    color: white;
+    text-align: center;
+}
+
+#result{
+    display: block;
+    margin: 0 auto;
+    border: 5px outset black;
+    float: left;
+}
+
+.vote {
+  width: 250px;
+  text-align: left;
+  padding: 20px;
+}
+
+.vote_result {
+    float: right;
+    padding: 20px;
 }
