@@ -42,7 +42,7 @@ class DetailView(generic.DetailView):
             return HttpResponseRedirect(reverse('polls:index'))
         elif not question.can_vote():
             messages.error(request, 'This poll is ended.')
-            return HttpResponseRedirect(reverse('polls:results', args=(pk,)))
+            return HttpResponseRedirect(reverse('polls:index'))
         else:
             return render(request, 'polls/detail.html', {'question': question, })
 
