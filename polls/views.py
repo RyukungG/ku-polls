@@ -3,9 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
 from django.views import generic
-from django.http import Http404
 from django.utils import timezone
 from .models import Choice, Question
+from django.contrib.auth.decorators import login_required
 
 
 class IndexView(generic.ListView):
@@ -62,6 +62,7 @@ class ResultsView(generic.DetailView):
             return render(request, 'polls/results.html', {'question': question})
 
 
+@login_required
 def vote(request, question_id):
     """Add vote to choice of the current question."""
     question = get_object_or_404(Question, pk=question_id)
