@@ -7,7 +7,7 @@
                 {{ form.as_table }}
           </table>
           <p>
-              <button type="submit">Login</button> | <a href="{% url 'polls:index' %}"><button type="button">Home</button></a>
+              <button type="submit">Login</button> | <a href="{% url 'signup'%}?next={{request.path}}"><button type="button">Sign up</button></a> | <a href="{% url 'polls:index' %}"><button type="button">Home</button></a>
           </p>
           <input type="hidden" name="next" value="{{next}}"/>
          </form>
