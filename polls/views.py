@@ -76,9 +76,12 @@ def vote(request, question_id):
         })
     else:
         try:
-            vote_select = Vote.objects.get(user=user)
-            vote_select.choice = selected_choice
-            vote_select.save()
+            vote_select = Vote.objects.filter(user=user)
+            for select in vote_select:
+                if select.question == question:
+                    select.choice = selected_choice
+                    select.save()
+                    break
         except:
             new_vote = Vote.objects.create(user=user, choice=selected_choice)
             new_vote.save()
