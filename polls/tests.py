@@ -181,6 +181,10 @@ class QuestionIndexViewTests(TestCase):
 
 class QuestionDetailViewTests(TestCase):
 
+    def setUp(self):
+        user = User.objects.create_user("test", "test@mail.com", "tttttttt")
+        user.save()
+
     def test_future_question(self):
         """
         The detail view of a question with a pub_date in the future
@@ -196,6 +200,7 @@ class QuestionDetailViewTests(TestCase):
         The detail view of a question with a pub_date in the past
         displays the question's text.
         """
+        self.client.login(username="test", password="tttttttt")
         past_question = create_question(question_text='Past Question.', days=-5)
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
