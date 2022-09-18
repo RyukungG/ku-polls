@@ -1,4 +1,4 @@
-# ku-polls
+# KU-polls
 ## Online Polls And Surveys
 
 An application for conducting online polls and surveys based
@@ -11,6 +11,12 @@ https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.
 ## Install and Run
 
 to be added.
+
+## User that exists in the KU-polls
+| Username  | Password    |
+|-----------|-------------|
+| kuruga    | kuruga2545   |
+| ryunosuke | ryunosuke2545|
 
 ## Project Documents
 
