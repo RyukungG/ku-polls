@@ -3,6 +3,7 @@ import datetime
 from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 from .models import Question
 
@@ -97,6 +98,28 @@ class QuestionModelTests(TestCase):
         self.assertTrue(question.can_vote())
 
 
+class VoteModelTest(TestCase):
+
+    def setUp(self):
+        user = User.objects.create_user("test", "test@mail.com", "tttttttt")
+        user.save()
+
+    def test_unauthenticated_vote(self):
+        """test if unauthenticated user vote it should redirect to login page."""
+        question = Question.objects.create(question_text="Test", pub_date=timezone.now())
+        url = reverse('polls:vote', args=(question.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_authenticate_vote(self):
+        """test authenticate user can vote."""
+        self.client.login(username="test", password="tttttttt")
+        question = Question.objects.create(question_text="Test", pub_date=timezone.now())
+        url = reverse('polls:vote', args=(question.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+
 class QuestionIndexViewTests(TestCase):
 
     def test_no_questions(self):
@@ -178,20 +201,3 @@ class QuestionDetailViewTests(TestCase):
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
 
-
-class QuestionResultViewTests(TestCase):
-    def test_vote_count(self):
-        test_question = create_question(question_text="test_vote", days=1)
-        test_question.choice_set.create(choice_text='test', votes=5)
-        choice_vote_result = test_question.choice_set.get(pk=1)
-        url = reverse('polls:results', args=(test_question.id,))
-        response = self.client.get(url)
-        self.assertEqual(choice_vote_result.votes, 5)
-
-    def test_past_day_view_vote(self):
-        test_question = create_question(question_text="test_vote", days=-5)
-        test_question.choice_set.create(choice_text='test', votes=2)
-        choice_vote_result = test_question.choice_set.get(pk=1)
-        url = reverse('polls:results', args=(test_question.id,))
-        response = self.client.get(url)
-        self.assertEqual(choice_vote_result.votes, 2)

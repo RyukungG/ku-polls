@@ -3,9 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
 from django.views import generic
-from django.http import Http404
 from django.utils import timezone
-from .models import Choice, Question
+from .models import Choice, Question, Vote
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class IndexView(generic.ListView):
@@ -23,7 +23,7 @@ class IndexView(generic.ListView):
         ).order_by('-pub_date')[:5]
 
 
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
     """Detail page of application."""
     model = Question
     template_name = 'polls/detail.html'
@@ -37,6 +37,7 @@ class DetailView(generic.DetailView):
     def get(self, request, pk):
         """Return different pages in accordance to can_vote and is_published."""
         question = get_object_or_404(Question, pk=pk)
+        user = request.user
         if not question.is_published():
             messages.error(request, 'This poll not publish yet.')
             return HttpResponseRedirect(reverse('polls:index'))
@@ -44,7 +45,12 @@ class DetailView(generic.DetailView):
             messages.error(request, 'This poll is ended.')
             return HttpResponseRedirect(reverse('polls:index'))
         else:
-            return render(request, 'polls/detail.html', {'question': question, })
+            check = ""
+            user_vote = Vote.objects.filter(user=user)
+            for select in user_vote:
+                if select.question == question:
+                    check = select.choice.choice_text
+            return render(request, 'polls/detail.html', {'question': question, 'check': check,})
 
 
 class ResultsView(generic.DetailView):
@@ -64,6 +70,7 @@ class ResultsView(generic.DetailView):
 
 def vote(request, question_id):
     """Add vote to choice of the current question."""
+    user = request.user
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
@@ -73,6 +80,12 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        vote_select = Vote.objects.filter(user=user)
+        for select in vote_select:
+            if select.question == question:
+                select.choice = selected_choice
+                select.save()
+                return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        new_vote = Vote.objects.create(user=user, choice=selected_choice)
+        new_vote.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
