@@ -15,6 +15,7 @@ to be added.
 ## User that exists in the KU-polls
 | Username  | Password    |
 |-----------|-------------|
+| b6410545550| RyuN2@@2   |
 | kuruga    | kuruga2545   |
 | ryunosuke | ryunosuke2545|
 
