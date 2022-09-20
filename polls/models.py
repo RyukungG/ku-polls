@@ -43,6 +43,7 @@ class Choice(models.Model):
     choice_text = models.CharField(max_length=200)
 
     def votes(self):
+        """Count vote from choice"""
         return Vote.objects.filter(choice=self).count()
 
     def __str__(self):
