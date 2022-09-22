@@ -1,5 +1,5 @@
-from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
 from django.views import generic
@@ -35,7 +35,7 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
     def get(self, request, pk):
-        """Return different pages in accordance to can_vote and is_published."""
+        """Return different pages in accordance to can_vote and is_published"""
         question = get_object_or_404(Question, pk=pk)
         user = request.user
         if not question.is_published():
@@ -50,7 +50,8 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
             for select in user_vote:
                 if select.question == question:
                     check = select.choice.choice_text
-            return render(request, 'polls/detail.html', {'question': question, 'check': check,})
+            return render(request, 'polls/detail.html',
+                          {'question': question, 'check': check, })
 
 
 class ResultsView(generic.DetailView):
@@ -59,13 +60,15 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
     def get(self, request, pk):
-        """Return result page if can_vote method returns True. If not then redirect to results page."""
+        """Return result page if can_vote method returns True.
+        If not then redirect to results page."""
         question = get_object_or_404(Question, pk=pk)
         if not question.is_published():
             messages.error(request, 'This poll not publish yet.')
             return HttpResponseRedirect(reverse('polls:index'))
         else:
-            return render(request, 'polls/results.html', {'question': question})
+            return render(request, 'polls/results.html',
+                          {'question': question})
 
 
 def vote(request, question_id):
@@ -85,7 +88,9 @@ def vote(request, question_id):
             if select.question == question:
                 select.choice = selected_choice
                 select.save()
-                return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+                return HttpResponseRedirect(reverse('polls:results',
+                                                    args=(question.id,)))
         new_vote = Vote.objects.create(user=user, choice=selected_choice)
         new_vote.save()
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        return HttpResponseRedirect(reverse('polls:results',
+                                            args=(question.id,)))

@@ -43,13 +43,16 @@ class QuestionModelTests(TestCase):
         was_published_recently() returns True for questions whose pub_date
         is within the last day.
         """
-        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        time = timezone.now() - datetime.timedelta(hours=23,
+                                                   minutes=59,
+                                                   seconds=59)
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
 
     def test_is_published_with_future_question(self):
         """
-        is_published() return False for questions whose pub_date is not arrived.
+        is_published() return False
+        for questions whose pub_date is not arrived.
         """
         time = timezone.now() + datetime.timedelta(days=1)
         future_question = Question(pub_date=time)
@@ -57,7 +60,8 @@ class QuestionModelTests(TestCase):
 
     def test_is_published_with_past_question(self):
         """
-        is_published() return True for questions whose pub_date are already passed.
+        is_published() return True
+        for questions whose pub_date are already passed.
         """
         time = timezone.now() - datetime.timedelta(days=1)
         past_question = Question(pub_date=time)
@@ -65,7 +69,8 @@ class QuestionModelTests(TestCase):
 
     def test_can_vote_with_current_question(self):
         """
-        can_vote() return True for questions whose current time are within the pub_date and end_date.
+        can_vote() return True
+        for questions whose current time are within the pub_date and end_date.
         """
         past = timezone.now() - timezone.timedelta(hours=1)
         future = timezone.now() + timezone.timedelta(hours=1)
@@ -82,7 +87,8 @@ class QuestionModelTests(TestCase):
 
     def test_can_vote_with_expired_question(self):
         """
-        can_voted() return False for questions whose end_date are already passed.
+        can_voted() return False
+        for questions whose end_date are already passed.
         """
         time = timezone.now() - datetime.timedelta(days=1)
         end_time = timezone.now() - datetime.timedelta(hours=1)
@@ -91,7 +97,8 @@ class QuestionModelTests(TestCase):
 
     def test_can_vote_with_none_end_date_question(self):
         """
-        can_vote() return True for questions whose not have end_date.
+        can_vote() return True
+        for questions whose not have end_date.
         """
         past = timezone.now() - timezone.timedelta(hours=1)
         question = Question(pub_date=past)
@@ -105,8 +112,10 @@ class VoteModelTest(TestCase):
         user.save()
 
     def test_unauthenticated_vote(self):
-        """test if unauthenticated user vote it should redirect to login page."""
-        question = Question.objects.create(question_text="Test", pub_date=timezone.now())
+        """test if unauthenticated user vote
+        it should redirect to login page."""
+        question = Question.objects.create(question_text="Test",
+                                           pub_date=timezone.now())
         url = reverse('polls:vote', args=(question.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
@@ -114,7 +123,8 @@ class VoteModelTest(TestCase):
     def test_authenticate_vote(self):
         """test authenticate user can vote."""
         self.client.login(username="test", password="tttttttt")
-        question = Question.objects.create(question_text="Test", pub_date=timezone.now())
+        question = Question.objects.create(question_text="Test",
+                                           pub_date=timezone.now())
         url = reverse('polls:vote', args=(question.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -190,7 +200,8 @@ class QuestionDetailViewTests(TestCase):
         The detail view of a question with a pub_date in the future
         returns a 404 not found.
         """
-        future_question = create_question(question_text='Future question.', days=5)
+        future_question = create_question(question_text='Future question.',
+                                          days=5)
         url = reverse('polls:detail', args=(future_question.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
@@ -201,8 +212,8 @@ class QuestionDetailViewTests(TestCase):
         displays the question's text.
         """
         self.client.login(username="test", password="tttttttt")
-        past_question = create_question(question_text='Past Question.', days=-5)
+        past_question = create_question(question_text='Past Question.',
+                                        days=-5)
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
-
