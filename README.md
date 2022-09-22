@@ -9,8 +9,31 @@ App created as part of the [Individual Software Process](
 https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.th/en/community-home).
 
 ## Install and Run
+make sure that you have [python](https://www.python.org/downloads/) in your computer.
+1. clone the repo into directory
+2. then to install the requirements
+```sh
+pip install -r requirements.txt
+```
+3. you have to create file name ```.env``` to configuration. Follow the example on sample.env.
+you may generate your secretkeys on [this site](https://djecrety.ir/)
 
-to be added.
+4. then to create the database run
+```sh
+python manage.py migrate
+```
+
+5. load the data
+```sh
+python manage.py loaddata data/polls.json data/users.json
+```
+
+6. run server
+```sh
+python manage.py runserver
+```
+
+ you can go to ```http://127.0.0.1:8000/``` to use the web application.
 
 ## User that exists in the KU-polls
 | Username  | Password    |
@@ -34,6 +57,8 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Iteration 2 Plan](https://github.com/RyukungG/ku-polls/wiki/Iteration-2-Plan)
 
 - [Iteration 3 Plan](https://github.com/RyukungG/ku-polls/wiki/Iteration-3-Plan)
+
+- [Iteration 4 Plan](https://github.com/RyukungG/ku-polls/wiki/Iteration-4-Plan)
 
 - [Task Board](https://github.com/users/RyukungG/projects/2/views/1)
 
