@@ -1,0 +1,183 @@
+[
+{
+  "model": "polls.question",
+  "pk": 6,
+  "fields": {
+    "question_text": "If you're invisible and you close your eyes do you think you can see through your eyelids?",
+    "pub_date": "2022-09-04T17:34:23Z",
+    "end_date": null
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 7,
+  "fields": {
+    "question_text": "Do you read novel?",
+    "pub_date": "2022-09-04T06:00:53Z",
+    "end_date": "2022-09-11T06:05:00Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 8,
+  "fields": {
+    "question_text": "Do you like cat",
+    "pub_date": "2122-09-11T09:41:29Z",
+    "end_date": "2122-09-11T09:44:26Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 9,
+  "fields": {
+    "question_text": "Do you have gf/bf?",
+    "pub_date": "2122-09-11T10:10:22Z",
+    "end_date": null
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 12,
+  "fields": {
+    "question_text": "Do history classes are going to get more difficult as time goes on?",
+    "pub_date": "2022-09-18T12:40:44Z",
+    "end_date": null
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 8,
+  "fields": {
+    "question": 6,
+    "choice_text": "Yes"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 9,
+  "fields": {
+    "question": 6,
+    "choice_text": "No"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 10,
+  "fields": {
+    "question": 7,
+    "choice_text": "yes"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 11,
+  "fields": {
+    "question": 7,
+    "choice_text": "no"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 12,
+  "fields": {
+    "question": 8,
+    "choice_text": "yes"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 13,
+  "fields": {
+    "question": 8,
+    "choice_text": "no"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 14,
+  "fields": {
+    "question": 9,
+    "choice_text": "yes"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 15,
+  "fields": {
+    "question": 9,
+    "choice_text": "no"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 16,
+  "fields": {
+    "question": 9,
+    "choice_text": "ok"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 23,
+  "fields": {
+    "question": 12,
+    "choice_text": "yes"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 24,
+  "fields": {
+    "question": 12,
+    "choice_text": "no"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 25,
+  "fields": {
+    "question": 12,
+    "choice_text": "maybe"
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 1,
+  "fields": {
+    "choice": 8,
+    "user": 1
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 2,
+  "fields": {
+    "choice": 9,
+    "user": 3
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 4,
+  "fields": {
+    "choice": 8,
+    "user": 2
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 7,
+  "fields": {
+    "choice": 23,
+    "user": 2
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 8,
+  "fields": {
+    "choice": 25,
+    "user": 3
+  }
+}
+]
