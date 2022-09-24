@@ -11,24 +11,39 @@ https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.
 ## Install and Run
 make sure that you have [python](https://www.python.org/downloads/) in your computer.
 1. clone the repo into directory
-2. then to install the requirements
+2. then create a virtual environment in your repo directory
+```sh
+python -m venv env
+```
+
+to activate a virtual environment om Windows
+```sh
+. env/Scripts/activate
+```
+to exit the environment
+```sh
+deactivate
+```
+
+3. then to install the requirements
 ```sh
 pip install -r requirements.txt
 ```
-3. you have to create file name ```.env``` to configuration. Follow the example on sample.env.
+
+4. you have to create file name ```.env``` to configuration. Follow the example on sample.env.
 you may generate your secretkeys on [this site](https://djecrety.ir/)
 
-4. then to create the database run
+5. then to create the database run
 ```sh
 python manage.py migrate
 ```
 
-5. load the data
+6. load the data
 ```sh
 python manage.py loaddata data/polls.json data/users.json
 ```
 
-6. run server
+7. run server
 ```sh
 python manage.py runserver
 ```
