@@ -1,4 +1,5 @@
 # KU-polls
+[![codecov](https://codecov.io/gh/RyukungG/ku-polls/branch/main/graph/badge.svg?token=19T61TT41V)](https://codecov.io/gh/RyukungG/ku-polls)
 ## Online Polls And Surveys
 
 An application for conducting online polls and surveys based
