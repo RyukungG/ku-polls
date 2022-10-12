@@ -1,4 +1,5 @@
 # KU-polls
+![test](https://github.com/RyukungG/ku-polls/actions/workflows/python-app.yml/badge.svg)
 [![codecov](https://codecov.io/gh/RyukungG/ku-polls/branch/main/graph/badge.svg?token=19T61TT41V)](https://codecov.io/gh/RyukungG/ku-polls)
 ## Online Polls And Surveys
 
