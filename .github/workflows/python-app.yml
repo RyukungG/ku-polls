@@ -38,3 +38,5 @@ jobs:
     - name: Test code coverage
       run: |
         coverage run manage.py test polls
+    - name: Upload report to codecov
+      uses: codecov/codecov-action@v3
