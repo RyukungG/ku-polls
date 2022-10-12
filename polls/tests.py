@@ -118,7 +118,7 @@ class VoteModelTest(TestCase):
                                            pub_date=timezone.now())
         url = reverse('polls:vote', args=(question.id,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
     def test_authenticate_vote(self):
         """test authenticate user can vote."""
