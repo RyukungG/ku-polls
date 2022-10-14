@@ -4,9 +4,9 @@ branch = True
 # omit uninteresting files
 omit =
     mysite/*
-    */__init__.py
-    */admin.py
+    polls/__init__.py
+    polls/admin.py
     manage.py
-    */migrations/*
-    */tests/*
+    polls/migrations/*
+    polls/tests/*
     
