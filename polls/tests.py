@@ -5,17 +5,20 @@ from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from .models import Question
+from .models import Question, Vote
 
 
-def create_question(question_text, days):
+def create_question(question_text, days, end=None):
     """
     Create a question with the given `question_text` and published the
     given number of `days` offset to now (negative for questions published
     in the past, positive for questions that have yet to be published).
     """
     time = timezone.now() + datetime.timedelta(days=days)
-    return Question.objects.create(question_text=question_text, pub_date=time)
+    endtime = end
+    if end != None:
+        endtime = timezone.now() + datetime.timedelta(days=end)
+    return Question.objects.create(question_text=question_text, pub_date=time, end_date=endtime)
 
 
 class QuestionModelTests(TestCase):
@@ -194,11 +197,12 @@ class QuestionDetailViewTests(TestCase):
     def setUp(self):
         user = User.objects.create_user("test", "test@mail.com", "tttttttt")
         user.save()
+        self.client.login(username="test", password="tttttttt")
 
     def test_future_question(self):
         """
         The detail view of a question with a pub_date in the future
-        returns a 404 not found.
+        returns a 302.
         """
         future_question = create_question(question_text='Future question.',
                                           days=5)
@@ -211,9 +215,67 @@ class QuestionDetailViewTests(TestCase):
         The detail view of a question with a pub_date in the past
         displays the question's text.
         """
-        self.client.login(username="test", password="tttttttt")
         past_question = create_question(question_text='Past Question.',
                                         days=-5)
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+    def test_end_question(self):
+        """
+        The detail view of a question with a pub_date in the future
+        returns a 302.
+        """
+        end_question = create_question(question_text='End question.',
+                                          days=-5, end=-3)
+        url = reverse('polls:detail', args=(end_question.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+
+class QuestionResultViewTests(TestCase):
+    def test_current_question(self):
+        """
+        Questions with a pub_date in the future can see result.
+        """
+        past_question = create_question(question_text="Past question.",
+                                        days=-30)
+        response = self.client.get(reverse('polls:results',
+                                           args=(past_question.id,)))
+        self.assertEqual(response.status_code, 200)
+
+    def test_future_question(self):
+        """
+        Questions with a pub_date in the future can't see result.
+        """
+        future_question = create_question(question_text="Future question.",
+                                          days=30)
+        response = self.client.get(reverse('polls:results',
+                                           args=(future_question.id,)))
+        self.assertEqual(response.status_code, 302)
+
+class QuestionVoteViewTest(TestCase):
+
+    def setUp(self) -> None:
+        self.user = User.objects.create_user("test", "test@mail.com", "tttttttt")
+        self.user.save()
+
+    def test_one_person_one_vote(self):
+        """One user can vote once per question."""
+        self.client.login(username="test", password="tttttttt")
+        question = create_question(question_text="test", days=-10)
+        choice_test1 = question.choice_set.create(choice_text="one")
+        choice_test2 = question.choice_set.create(choice_text="two")
+        self.client.post(reverse('polls:vote', args=(question.id,)),
+                         {'choice': choice_test1.id})
+        selected = Vote.objects.get(user=self.user,
+                                    choice__in=question.choice_set.all())
+        self.assertEqual(selected.choice, choice_test1)
+        self.assertEqual(Vote.objects.all().count(), 1)
+
+        self.client.post(reverse('polls:vote', args=(question.id,)),
+                         {'choice': choice_test2.id})
+        selected = Vote.objects.get(user=self.user,
+                                    choice__in=question.choice_set.all())
+        self.assertEqual(selected.choice, choice_test2)
+        self.assertEqual(Vote.objects.all().count(), 1)
+
