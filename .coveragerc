@@ -8,5 +8,5 @@ omit =
     polls/admin.py
     manage.py
     polls/migrations/*
-    polls/tests/*
+    polls/tests.py
     
